@@ -1,0 +1,118 @@
+{% comment %}
+  ═══════════════════════════════════════════════════════
+  STURDY SAFE CONFIGURATOR — Shopify Section
+  ═══════════════════════════════════════════════════════
+
+  INSTALLATION:
+  1. Shopify Admin → Online Store → Themes → Edit Code
+  2. Under "Sections" → Add new section → name: "sturdy-configurator"
+  3. Delete all default content, paste this entire file
+  4. Save
+
+  Then create the page:
+  5. Under "Templates" → Add new template → type "page" → name "configurator"
+  6. Paste this JSON:
+     {
+       "sections": {
+         "main": { "type": "sturdy-configurator", "settings": {} }
+       },
+       "order": ["main"]
+     }
+  7. Save
+  8. Go to Online Store → Pages → Add page
+  9. Title: "Configure Your Safe"
+  10. Template: page.configurator
+  11. Save → Done!
+
+  JS BUNDLE:
+  Upload sturdy-configurator.min.js to:
+  Settings → Files (or Content → Files)
+  Then update the script src below with the URL Shopify gives you.
+  OR: leave it loading from the theme assets folder (see step below).
+
+  ALTERNATIVE (assets folder):
+  1. In theme editor, under "Assets" → Add new asset
+  2. Upload sturdy-configurator.min.js
+  3. The script tag below already references it via asset_url
+{% endcomment %}
+
+<style>
+  /* Hide the default page title since the configurator has its own */
+  .section-configurator + .page-width h1.page-title,
+  .template-page .page-header { display: none; }
+  /* Ensure full width on the configurator page */
+  .section-configurator { max-width: 100%; padding: 0; }
+</style>
+
+<div id="sturdy-configurator-mount" style="min-height: 600px;">
+  <noscript>
+    <div style="text-align:center; padding: 60px 20px; font-family: 'Source Sans 3', sans-serif;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 32px;">Configure Your Safe</h2>
+      <p style="color: #888; margin-top: 12px;">JavaScript is required to use our safe configurator.</p>
+      <p>Please enable JavaScript or <a href="/pages/contact" style="color: #8B6914;">contact us directly</a> at <a href="tel:8002620023" style="color: #8B6914;">800-262-0023</a>.</p>
+    </div>
+  </noscript>
+  <div id="sc-loading" style="text-align:center; padding: 80px 20px; font-family: 'Source Sans 3', sans-serif;">
+    <div style="width:40px;height:40px;border:3px solid #eae8e5;border-top-color:#1a1a1a;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto"></div>
+    <p style="color:#999;margin-top:16px;font-size:14px;">Loading configurator...</p>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+  </div>
+</div>
+
+{%- comment -%} Fonts {%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+{%- comment -%} React 18 Production {%- endcomment -%}
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+{%- comment -%}
+  Configurator bundle — UPDATE THIS PATH after uploading the .min.js file.
+  Option A: Upload to Settings → Files, then use the full Shopify CDN URL
+  Option B: Upload to Assets folder in theme editor, then use:
+    {{ 'sturdy-configurator.min.js' | asset_url }}
+{%- endcomment -%}
+<script src="{{ 'sturdy-configurator.min.js' | asset_url }}" defer></script>
+
+<script>
+  // Mount the configurator after everything loads
+  (function initConfigurator() {
+    function mount() {
+      var el = document.getElementById('sturdy-configurator-mount');
+      var loading = document.getElementById('sc-loading');
+      if (!el || !window.React || !window.ReactDOM || !window.SturdyConfigurator) {
+        // Retry in 100ms if scripts haven't loaded yet
+        if (document.readyState !== 'complete') {
+          setTimeout(mount, 100);
+          return;
+        }
+        if (loading) loading.innerHTML = '<p style="color:#999;font-family:sans-serif;">Error loading configurator. Please refresh or <a href="/pages/contact">contact us</a>.</p>';
+        return;
+      }
+      if (loading) loading.remove();
+      var root = ReactDOM.createRoot(el);
+      root.render(React.createElement(window.SturdyConfigurator));
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', mount);
+    } else {
+      mount();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Safe Configurator",
+  "tag": "section",
+  "class": "section-configurator",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Safe Configurator"
+    }
+  ]
+}
+{% endschema %}

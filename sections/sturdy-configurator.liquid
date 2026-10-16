@@ -42,6 +42,78 @@
   .template-page .page-header { display: none; }
   /* Ensure full width on the configurator page */
   .section-configurator { max-width: 100%; padding: 0; }
+
+  /*
+    Ritual (Horizon family) compatibility layer.
+    sturdy-configurator.min.js was built against Dawn, which the live store ran
+    until this theme. Everything below lives here in the section so the exact
+    same bundle can be served by either theme.
+  */
+
+  /*
+    1. Fonts. The bundle reads Dawn's variable names (--font-body-family,
+       --font-heading-family). Ritual names them --font-body--family and
+       --font-heading--family. Bridge them so the configurator keeps inheriting
+       the theme's fonts instead of falling back to Playfair Display.
+  */
+  #sturdy-configurator-mount {
+    --font-body-family: var(--font-body--family);
+    --font-heading-family: var(--font-heading--family);
+  }
+
+  /*
+    2. Text metrics. The configurator's layout was tuned on Dawn's body text
+       (font-body-scale 1.05: 15.75px, 16.8px from 750px up, 0.06rem tracking,
+       line-height 1 + 0.8 / 1.05). Ritual's body is 14px with no tracking and a
+       1.4 line-height, which every configurator element without an inline size
+       would inherit. Pin the Dawn values on the configurator root.
+  */
+  #sturdy-configurator-mount .sc {
+    font-size: 15.75px;
+    letter-spacing: 0.63px;
+    line-height: calc(1 + 0.8 / 1.05);
+    text-transform: none;
+  }
+  @media screen and (min-width: 750px) {
+    #sturdy-configurator-mount .sc { font-size: 16.8px; }
+  }
+
+  /*
+    3. Ritual's element-level rules. These selectors are kept at the same
+       specificity as the bundle's own rules (one class plus one element) so they
+       beat Ritual's base.css, while the bundle's stylesheet, which renders later
+       inside .sc, and its inline styles still win.
+  */
+  /* Ritual sets h1 to h5 in uppercase with its own tracking and leading. */
+  :where(#sturdy-configurator-mount) .sc :is(h1, h2, h3, h4, h5, h6) {
+    text-transform: none;
+    letter-spacing: 0.6px;
+    line-height: 1.3;
+  }
+  /* Ritual zeroes the outer margins of first and last paragraphs. */
+  :where(#sturdy-configurator-mount) .sc p {
+    margin-block: 1em;
+  }
+  /* Ritual makes every img and svg a full-width block. */
+  :where(#sturdy-configurator-mount) .sc img {
+    display: inline;
+    max-width: none;
+    width: auto;
+    height: auto;
+  }
+  :where(#sturdy-configurator-mount) .sc svg {
+    display: inline;
+    max-width: none;
+  }
+
+  /*
+    4. Sticky header. Ritual's header is set to reappear on scroll up, and the
+       configurator scrolls back to its top on every step change, so keep the
+       step pills clear of the header. Ritual keeps --header-height current on body.
+  */
+  #sturdy-configurator-mount #sc-root {
+    scroll-margin-top: var(--header-height, 0px);
+  }
 </style>
 
 <div id="sturdy-configurator-mount" style="min-height: 600px;">
@@ -64,9 +136,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-{%- comment -%} React 18 Production {%- endcomment -%}
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+{%- comment -%} React 18 Production, pinned to the exact release the bundle is tested with {%- endcomment -%}
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
 
 {%- comment -%}
   Configurator bundle — UPDATE THIS PATH after uploading the .min.js file.

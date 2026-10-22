@@ -1,0 +1,133 @@
+{%- doc -%}
+  Sends the shopper from a product page to that product in the Safe Configurator.
+
+  The configurator bundle (assets/sturdy-configurator.min.js) reads
+  ?product=<product handle> and opens that model at its first step. A product the
+  configurator does not offer lands on the configurator's start screen instead.
+{%- enddoc -%}
+
+{%- liquid
+  assign customize_product = closest.product | default: product
+  assign configurator_url = block.settings.configurator_page.url | default: pages['safe-configurator'].url | default: '/pages/safe-configurator'
+  assign customize_link = configurator_url
+  if customize_product.handle != blank
+    assign customize_link = configurator_url | append: '?product=' | append: customize_product.handle
+  endif
+-%}
+
+{% render 'button', link: customize_link, block: block %}
+
+{% schema %}
+{
+  "name": "Customize Safe button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Opens the Safe Configurator on this product. Products the configurator does not offer open its start screen."
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "Customize Safe"
+    },
+    {
+      "type": "page",
+      "id": "configurator_page",
+      "label": "Configurator page",
+      "info": "Leave blank to use the Safe Configurator page (/pages/safe-configurator)."
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "style_class",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "button",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "button-secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "link",
+          "label": "t:options.link"
+        }
+      ],
+      "default": "button"
+    },
+    {
+      "type": "header",
+      "content": "t:content.size"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width_desktop",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == \"custom\" }}"
+    },
+    {
+      "type": "select",
+      "id": "width_mobile",
+      "label": "t:settings.width_mobile",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit_content"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "custom"
+    },
+    {
+      "type": "range",
+      "id": "custom_width_mobile",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width_mobile == \"custom\" }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customize Safe button",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}

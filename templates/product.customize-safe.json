@@ -297,6 +297,7 @@
             },
             "aris_product_options_avisplus_options_block_CQyjDM": {
               "type": "shopify://apps/aris-product-options/blocks/avisplus-options-block/e076618e-4c9c-447f-ad6d-4f1577799c29",
+              "disabled": true,
               "settings": {}
             },
             "text": {

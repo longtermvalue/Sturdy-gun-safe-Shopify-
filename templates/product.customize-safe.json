@@ -1,12 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "product-information",
       "blocks": {
-        "aris_product_options_avisplus_options_block_T9iKcr": {
-          "type": "shopify://apps/aris-product-options/blocks/avisplus-options-block/e076618e-4c9c-447f-ad6d-4f1577799c29",
-          "settings": {}
-        },
         "media-gallery": {
           "type": "_product-media-gallery",
           "static": true,
@@ -228,6 +233,20 @@
               },
               "blocks": {}
             },
+            "customize_safe": {
+              "type": "customize-safe-button",
+              "settings": {
+                "label": "Customize Safe",
+                "configurator_page": "",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "custom",
+                "custom_width": 100,
+                "width_mobile": "custom",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            },
             "buy_buttons": {
               "type": "buy-buttons",
               "settings": {
@@ -256,6 +275,7 @@
                 },
                 "accelerated-checkout": {
                   "type": "accelerated-checkout",
+                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
@@ -274,6 +294,10 @@
                 "padding-block-end": 0
               },
               "blocks": {}
+            },
+            "aris_product_options_avisplus_options_block_CQyjDM": {
+              "type": "shopify://apps/aris-product-options/blocks/avisplus-options-block/e076618e-4c9c-447f-ad6d-4f1577799c29",
+              "settings": {}
             },
             "text": {
               "type": "product-description",
@@ -300,18 +324,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "customize_safe": {
-              "type": "customize-safe-button",
-              "settings": {
-                "label": "Customize Safe",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "custom",
-                "custom_width": 100,
-                "width_mobile": "custom",
-                "custom_width_mobile": 100
-              }
             }
           },
           "block_order": [
@@ -320,13 +332,11 @@
             "customize_safe",
             "buy_buttons",
             "divider",
+            "aris_product_options_avisplus_options_block_CQyjDM",
             "text"
           ]
         }
       },
-      "block_order": [
-        "aris_product_options_avisplus_options_block_T9iKcr"
-      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",

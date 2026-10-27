@@ -276,8 +276,8 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Call 800-262-0023",
-            "link": "shopify://pages/contact",
+            "label": "Look at it",
+            "link": "shopify://pages/safe-mover-installers",
             "open_in_new_tab": false,
             "style_class": "button-secondary",
             "width": "fit-content",

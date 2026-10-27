@@ -90,6 +90,16 @@
       >
     </div>
 
+    {%- liquid
+      assign zip_label = block.settings.zip_label | strip | default: 'ZIP code'
+      assign zip_value = ''
+      if customer.default_address.zip != blank
+        assign zip_value = customer.default_address.zip
+      endif
+    -%}
+    {%- if block.settings.show_zip %}
+      <div class="contact-form__form-row">
+    {%- endif %}
     <label
       class="visually-hidden"
       for="ContactForm-phone"
@@ -106,6 +116,34 @@
       value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
       placeholder="{{ 'blocks.contact_form.phone' | t }}"
     >
+
+    {%- if block.settings.show_zip %}
+      <label
+        class="visually-hidden"
+        for="ContactForm-zip"
+      >
+        {{- zip_label | escape -}}
+        {%- if block.settings.zip_required %}
+          <span aria-hidden="true">*</span>
+        {%- endif -%}
+      </label>
+      <input
+        type="text"
+        id="ContactForm-zip"
+        class="contact-form__input"
+        autocomplete="postal-code"
+        name="contact[ZIP code]"
+        pattern="\s*(\d{5}(-\d{4})?|[A-Za-z]\d[A-Za-z][ \-]?\d[A-Za-z]\d)\s*"
+        title="Enter a 5-digit ZIP code."
+        value="{{ zip_value | escape }}"
+        placeholder="{{ zip_label | escape }}"
+        {% if block.settings.zip_required %}
+          required
+          aria-required="true"
+        {% endif %}
+      >
+      </div>
+    {%- endif %}
 
     <label
       class="visually-hidden"
@@ -175,6 +213,36 @@
   "name": "t:names.contact_form",
   "tag": null,
   "settings": [
+    {
+      "type": "header",
+      "content": "ZIP code field"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_zip",
+      "label": "Ask for ZIP code",
+      "info": "Arrives in your contact form emails as \"ZIP code\".",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "zip_label",
+      "label": "ZIP code placeholder",
+      "default": "ZIP code",
+      "visible_if": "{{ block.settings.show_zip }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "zip_required",
+      "label": "Require ZIP code",
+      "info": "Accepts a 5-digit ZIP code, ZIP+4, or a Canadian postal code.",
+      "default": true,
+      "visible_if": "{{ block.settings.show_zip }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
     {
       "type": "select",
       "id": "width",

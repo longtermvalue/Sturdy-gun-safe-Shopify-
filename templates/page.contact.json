@@ -122,7 +122,7 @@
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Call us, email us, or fill out the form below. We'll answer your questions about sizes, steel thickness, fire protection, delivery, and anything else.</p>",
+                    "text": "<p>Call us, email us, or fill out the form below.&nbsp;</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -276,7 +276,7 @@
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p>Whether you're deciding between models, planning delivery, or want to know about current discounts — our team has been building and supporting safes since 1959. Reach out and a real person will help.<br/><br/><a href=\"tel:8002620023\">800-262-0023</a></p><p><a href=\"mailto:info@sturdysafe.com\">info@sturdysafe.com</a></p><p>2030 S. Sarah<br/>Fresno, CA 93721</p>",
+                "text": "<p>Don’t hesitate to reach out. Pull the trigger.<br/><br/><a href=\"tel:8002620023\">800-262-0023</a></p><p><a href=\"mailto:info@sturdysafe.com\">info@sturdysafe.com</a></p><p>2030 S. Sarah<br/>Fresno, CA 93721</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",

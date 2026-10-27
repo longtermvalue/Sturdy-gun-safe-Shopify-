@@ -249,6 +249,7 @@
             },
             "buy_buttons": {
               "type": "buy-buttons",
+              "disabled": true,
               "settings": {
                 "stacking": false,
                 "show_pickup_availability": false,

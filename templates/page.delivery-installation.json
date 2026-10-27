@@ -67,7 +67,7 @@
           "name": "t:names.button",
           "settings": {
             "label": "Recommended Movers List",
-            "link": "shopify://collections/all",
+            "link": "shopify://pages/safe-mover-installers",
             "open_in_new_tab": false,
             "style_class": "button",
             "width": "fit-content",
@@ -225,7 +225,7 @@
         "text_bcNkTk": {
           "type": "text",
           "settings": {
-            "text": "<h2>Questions About Delivery?</h2>",
+            "text": "<h2>See Our Mover Recommendation Page!</h2>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",

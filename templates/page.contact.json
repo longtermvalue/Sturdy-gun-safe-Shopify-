@@ -249,6 +249,7 @@
             "text_JrFKKQ": {
               "type": "text",
               "name": "t:names.heading",
+              "disabled": true,
               "settings": {
                 "text": "<h2>Get In Touch</h2>",
                 "width": "100%",
@@ -276,7 +277,7 @@
               "type": "text",
               "name": "t:names.description",
               "settings": {
-                "text": "<p>Don’t hesitate to reach out. Pull the trigger.<br/><br/><a href=\"tel:8002620023\">800-262-0023</a></p><p><a href=\"mailto:info@sturdysafe.com\">info@sturdysafe.com</a></p><p>2030 S. Sarah<br/>Fresno, CA 93721</p>",
+                "text": "<p><a href=\"tel:8002620023\">800-262-0023</a></p><p>SturdyGunSafe@yahoo.com</p><p>2030 S. Sarah<br/>Fresno, CA 93721</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",

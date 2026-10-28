@@ -136,6 +136,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+{%- comment -%}
+  Live Shopify prices for the configurator. Each model's price follows its Shopify product
+  (first variant), so a price changed on the product page shows here too, and a higher
+  compare-at price is shown struck through, as on the product page. Printed only when
+  the "Use Shopify product prices" setting is on and the shopper sees the store's own currency
+  (the draft order is priced in it). Models without a product here keep the admin price.
+{%- endcomment -%}
+<script>
+  window.__STURDY_PRICES__ = {% if section.settings.use_shopify_prices and cart.currency.iso_code == shop.currency %}{
+    {%- for p in collections.all.products limit: 50 -%}
+      {{ p.handle | json }}: {"p": {{ p.variants.first.price | default: 0 }}, "c": {{ p.variants.first.compare_at_price | default: 0 }}}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  }{% else %}null{% endif %};
+</script>
+
 {%- comment -%} React 18 Production, pinned to the exact release the bundle is tested with {%- endcomment -%}
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
@@ -180,7 +195,15 @@
   "name": "Safe Configurator",
   "tag": "section",
   "class": "section-configurator",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_shopify_prices",
+      "label": "Use Shopify product prices",
+      "info": "Each model's price follows its Shopify product, so a price changed on the product page shows here too. Turn off to use the prices set in the configurator admin.",
+      "default": true
+    }
+  ],
   "presets": [
     {
       "name": "Safe Configurator"

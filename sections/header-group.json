@@ -17,7 +17,7 @@
         "announcement_CzEzqK": {
           "type": "_announcement",
           "settings": {
-            "text": "Talk To A Safe Expert About Current Discounts.",
+            "text": "Get your order in early! The Christmas sale is happening now! Discounts already applied.&nbsp;",
             "link": "https://www.sturdysafe.com/pages/contact",
             "font": "var(--font-body--family)",
             "font_size": "0.75rem",

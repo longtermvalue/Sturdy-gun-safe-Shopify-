@@ -15,7 +15,7 @@
         "text_bUbPad": {
           "type": "text",
           "settings": {
-            "text": "<h2>Built Stronger. Built Smarter.</h2>",
+            "text": "<h1>Built Stronger. Built Smarter.</h1>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",

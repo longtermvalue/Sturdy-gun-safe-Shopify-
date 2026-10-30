@@ -153,16 +153,16 @@
 
 {%- comment -%}
   Spec sheet download on the review step. The bundle loads these files only when a shopper clicks
-  "Download Spec Sheet": jsPDF 4.2.1 (MIT license) and Latin subsets of Anton and Inter (SIL Open Font
-  License 1.1, https://openfontlicense.org), plus the logo from Theme settings. Printed as null when the
-  "Show spec sheet download" setting is off, which hides the button.
+  "Download Spec Sheet": jsPDF 4.2.1 (MIT license) and a script holding Latin subsets of Anton and Inter
+  (SIL Open Font License 1.1, https://openfontlicense.org) as base64 TrueType, plus the logo from Theme
+  settings. The fonts ship as a .js asset because Shopify's CDN serves .ttf theme assets as WOFF2, which
+  jsPDF cannot read. Printed as null when the "Show spec sheet download" setting is off, which hides
+  the button.
 {%- endcomment -%}
 <script>
   window.__STURDY_SPEC__ = {% if section.settings.show_spec_sheet %}{
     "lib": {{ 'sturdy-jspdf.umd.min.js' | asset_url | json }},
-    "anton": {{ 'sturdy-spec-anton.ttf' | asset_url | json }},
-    "inter": {{ 'sturdy-spec-inter.ttf' | asset_url | json }},
-    "interBold": {{ 'sturdy-spec-inter-semibold.ttf' | asset_url | json }},
+    "fonts": {{ 'sturdy-spec-fonts.js' | asset_url | json }},
     "logo": {% if settings.logo %}{{ settings.logo | image_url: width: 800 | json }}{% else %}""{% endif %}
   }{% else %}null{% endif %};
 </script>

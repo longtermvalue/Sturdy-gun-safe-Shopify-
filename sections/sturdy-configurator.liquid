@@ -151,6 +151,22 @@
   }{% else %}null{% endif %};
 </script>
 
+{%- comment -%}
+  Spec sheet download on the review step. The bundle loads these files only when a shopper clicks
+  "Download Spec Sheet": jsPDF 4.2.1 (MIT license) and Latin subsets of Anton and Inter (SIL Open Font
+  License 1.1, https://openfontlicense.org), plus the logo from Theme settings. Printed as null when the
+  "Show spec sheet download" setting is off, which hides the button.
+{%- endcomment -%}
+<script>
+  window.__STURDY_SPEC__ = {% if section.settings.show_spec_sheet %}{
+    "lib": {{ 'sturdy-jspdf.umd.min.js' | asset_url | json }},
+    "anton": {{ 'sturdy-spec-anton.ttf' | asset_url | json }},
+    "inter": {{ 'sturdy-spec-inter.ttf' | asset_url | json }},
+    "interBold": {{ 'sturdy-spec-inter-semibold.ttf' | asset_url | json }},
+    "logo": {% if settings.logo %}{{ settings.logo | image_url: width: 800 | json }}{% else %}""{% endif %}
+  }{% else %}null{% endif %};
+</script>
+
 {%- comment -%} React 18 Production, pinned to the exact release the bundle is tested with {%- endcomment -%}
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin></script>
@@ -201,6 +217,13 @@
       "id": "use_shopify_prices",
       "label": "Use Shopify product prices",
       "info": "Each model's price follows its Shopify product, so a price changed on the product page shows here too. Turn off to use the prices set in the configurator admin.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_spec_sheet",
+      "label": "Show spec sheet download",
+      "info": "Adds a Download Spec Sheet (PDF) button to the review step, with the shopper's configuration, price, product specs and photo.",
       "default": true
     }
   ],

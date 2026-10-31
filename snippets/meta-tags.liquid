@@ -23,12 +23,13 @@
 >
 
 {%- liquid
-  # The store name is saved with a trailing space ("Sturdy Gun Safe "), so strip it wherever it is printed.
-  assign shop_name = shop.name | strip
-  assign og_title = page_title | default: shop_name
+  # Brand shown in titles and share previews: "Sturdy Safe", the owner's choice (2026-10-31). "Sturdy Gun Safe"
+  # is declared as the alternate name in the WebSite markup below and the Organization markup in the header.
+  assign brand_name = 'Sturdy Safe'
+  assign og_title = page_title | default: brand_name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: shop_name
+  assign og_description = page_description | default: shop.description | default: brand_name
 
   if request.page_type == 'product'
     assign og_type = 'product'
@@ -41,7 +42,7 @@
 
 <meta
   property="og:site_name"
-  content="{{ shop_name | escape }}"
+  content="{{ brand_name | escape }}"
 >
 <meta
   property="og:url"
@@ -110,12 +111,11 @@
 >
 
 {%- liquid
-  # Add the store name only when the title does not already name the brand ("Sturdy Gun Safe" or
-  # "Sturdy Safe", any letter case), so no title shows the brand twice.
+  # Add the brand only when the title does not already name it ("Sturdy Safe" or "Sturdy Gun Safe",
+  # any letter case), so no title shows the brand twice.
   assign title_lc = page_title | downcase
-  assign shop_name_lc = shop_name | downcase
   assign title_has_brand = false
-  if title_lc contains shop_name_lc or title_lc contains 'sturdy safe'
+  if title_lc contains 'sturdy safe' or title_lc contains 'sturdy gun safe'
     assign title_has_brand = true
   endif
 -%}
@@ -123,13 +123,26 @@
   {{ page_title }}
   {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless title_has_brand %} &ndash; {{ shop_name }}{% endunless -%}
+  {%- unless title_has_brand %} &ndash; {{ brand_name }}{% endunless -%}
 </title>
 
 <link
   rel="canonical"
   href="{{ canonical_url }}"
 >
+
+{%- comment -%} Site name for Google: WebSite markup belongs on the homepage only. {%- endcomment -%}
+{%- if request.page_type == 'index' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": {{ brand_name | json }},
+      "alternateName": "Sturdy Gun Safe",
+      "url": {{ request.origin | append: routes.root_url | json }}
+    }
+  </script>
+{%- endif -%}
 
 {%- comment -%} Duplicate utility pages: keep them working, keep them out of search results. {%- endcomment -%}
 {%- if request.page_type == 'page' -%}

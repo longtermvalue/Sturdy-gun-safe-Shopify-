@@ -285,14 +285,16 @@
 {% endcapture %}
 
 {%- comment -%}
-  Organization markup for search engines. Phone, email and address are the ones shown in the footer and on the
-  contact page; update them here if they change.
+  Organization markup for search engines. Name: "Sturdy Safe", the owner's choice (2026-10-31), with "Sturdy Gun Safe"
+  as the alternate. Phone, email and address are the ones shown in the footer and on the contact page; update them
+  here if they change.
 {%- endcomment -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": {{ shop.name | strip | json }},
+    "name": "Sturdy Safe",
+    "alternateName": "Sturdy Gun Safe",
     {% if settings.logo %}
       "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
     {% endif %}

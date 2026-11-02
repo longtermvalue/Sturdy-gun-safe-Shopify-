@@ -389,7 +389,7 @@
           "block_order": []
         }
       },
-      "disabled": true,
+      "disabled": false,
       "name": "t:names.collection_links_text",
       "settings": {
         "collection_list": [

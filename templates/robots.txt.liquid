@@ -1,0 +1,19 @@
+{%- comment -%}
+  Shopify's default rules, plus one line: crawlers skip the customer account sign-in redirect,
+  which answers bots with a 406 (signed-in shoppers are unaffected).
+{%- endcomment -%}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
+
+  {%- for rule in group.rules -%}
+    {{ rule }}
+  {%- endfor -%}
+
+  {%- if group.user_agent.value == '*' -%}
+    {{ 'Disallow: /customer_authentication' }}
+  {%- endif -%}
+
+  {%- if group.sitemap != blank -%}
+    {{ group.sitemap }}
+  {%- endif %}
+{% endfor %}

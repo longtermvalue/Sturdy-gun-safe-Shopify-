@@ -126,9 +126,19 @@
   {%- unless title_has_brand %} &ndash; {{ brand_name }}{% endunless -%}
 </title>
 
+{%- comment -%}
+  Tag-filtered collection URLs (for example /collections/gun-safes/gun-safe) duplicate the collection itself,
+  so their canonical points at the unfiltered collection.
+{%- endcomment -%}
+{%- liquid
+  assign seo_canonical = canonical_url
+  if request.page_type == 'collection' and current_tags and collection.url
+    assign seo_canonical = request.origin | append: collection.url
+  endif
+-%}
 <link
   rel="canonical"
-  href="{{ canonical_url }}"
+  href="{{ seo_canonical }}"
 >
 
 {%- comment -%} Site name for Google: WebSite markup belongs on the homepage only. {%- endcomment -%}
